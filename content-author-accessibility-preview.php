@@ -140,10 +140,8 @@ function caa11yp_user_roles_cb( $args ) {
       $user_role = ( isset( $user_roles[$key] ) ) ? $user_roles[$key] : 0;
     }
     ?>
-    <label>
-      <input type="checkbox" name="caa11yp_options[user_roles][<?php echo $key; ?>]" value="1" <?php checked( 1, $user_role, true ); ?> />
-      <?php echo $role['name']; ?>
-    </label><br>
+      <input type="checkbox" id="caa11yp_options_user_roles_<?php echo $key; ?>" name="caa11yp_options[user_roles][<?php echo $key; ?>]" value="1" <?php checked( 1, $user_role, true ); ?> />
+      <label for="caa11yp_options_user_roles_<?php echo $key; ?>"><?php echo $role['name']; ?></label><br>
     <?php
   endforeach;
 }
