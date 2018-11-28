@@ -26,7 +26,7 @@ function caa11yp_activation() {
       'caa11yp_options',
       array(
         'preview' => 1,
-        'user_roles' => 1,
+        'user_roles' => true,
       )
     );
   }
