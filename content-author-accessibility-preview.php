@@ -1,5 +1,11 @@
 <?php
 /**
+ * Content Author Accessibility Preview
+ *
+ * @package content-author-accessibility-preview
+ * @author Matt Rose
+ * @license GPLv2
+ *
  * Plugin Name:  Content Author Accessibility Preview
  * Plugin URI:   https://glaikit.co.uk/
  * Description:  Flag up potential accessibility issues when your content authors preview the post or page that they have just added or amended
@@ -10,7 +16,6 @@
  * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:  caa11yp
  * Domain Path:  /languages
- * Package: content-author-accessibility-preview
  */
 
 // If this file is called directly, abort.
@@ -50,7 +55,7 @@ register_uninstall_hook( __FILE__, 'caa11yp_uninstall' );
  * @return array $links
  */
 function caa11yp_add_settings_link( $links, $file ) {
-	if ( $file == plugin_basename( __FILE__ ) ) {
+	if ( plugin_basename( __FILE__ ) === $file ) {
 		$settings_link = '<a href="' . admin_url( 'options-general.php?page=caa11yp' ) . '">' . __( 'Settings', 'caa11yp' ) . '</a>';
 		array_unshift( $links, $settings_link );
 	}
@@ -71,39 +76,13 @@ function caa11yp_settings_init() {
 		'caa11yp'
 	);
 
-<<<<<<< HEAD
 	add_settings_field(
-		'caa11yp_options[allpages]',
-		__( 'Show site-wide', 'caa11yp' ),
-		'caa11yp_allpages_cb',
+		'caa11yp_options[views]',
+		__( 'Show on specific views', 'caa11yp' ),
+		'caa11yp_views_cb',
 		'caa11yp',
 		'caa11yp_section_visibility'
 	);
-
-	add_settings_field(
-		'caa11yp_options[preview]',
-		__( 'Show in Preview', 'caa11yp' ),
-		'caa11yp_preview_cb',
-		'caa11yp',
-		'caa11yp_section_visibility'
-	);
-
-	add_settings_field(
-		'caa11yp_options[customizer]',
-		__( 'Show in Customizer', 'caa11yp' ),
-		'caa11yp_customizer_cb',
-		'caa11yp',
-		'caa11yp_section_visibility'
-	);
-=======
-  add_settings_field(
-    'caa11yp_options[views]',
-    __( 'Show on specific views', 'caa11yp' ),
-    'caa11yp_views_cb',
-    'caa11yp',
-    'caa11yp_section_visibility'
-  );
->>>>>>> feature_options_rearrange
 
 	add_settings_field(
 		'caa11yp_options[user_roles]',
@@ -127,46 +106,31 @@ add_action( 'admin_init', 'caa11yp_settings_init' );
 function caa11yp_section_visibility_cb( $args ) {
 }
 
-<<<<<<< HEAD
-function caa11yp_allpages_cb( $args ) {
-	$options  = get_option( 'caa11yp_options' );
-	$allpages = ( isset( $options['allpages'] ) ) ? $options['allpages'] : 0;
-	?>
-	<input type="checkbox" name="caa11yp_options[allpages]" value="1" <?php checked( 1, $allpages, true ); ?> />
-	<?php
-}
-
-function caa11yp_preview_cb( $args ) {
-	$options = get_option( 'caa11yp_options' );
-	$preview = ( isset( $options['preview'] ) ) ? $options['preview'] : 0;
-	?>
-	<input type="checkbox" name="caa11yp_options[preview]" value="1" <?php checked( 1, $preview, true ); ?> />
-	<?php
-}
-
-function caa11yp_customizer_cb( $args ) {
+/**
+ * Settings views callback.
+ *
+ * @param array $args Arguments.
+ */
+function caa11yp_views_cb( $args ) {
 	$options    = get_option( 'caa11yp_options' );
+	$allpages   = ( isset( $options['allpages'] ) ) ? $options['allpages'] : 0;
+	$preview    = ( isset( $options['preview'] ) ) ? $options['preview'] : 0;
 	$customizer = ( isset( $options['customizer'] ) ) ? $options['customizer'] : 0;
 	?>
-	<input type="checkbox" name="caa11yp_options[customizer]" value="1" <?php checked( 1, $customizer, true ); ?> />
+	<input type="checkbox" id="caa11yp_options_allpages" name="caa11yp_options[allpages]" value="1" <?php checked( 1, $allpages, true ); ?> />
+	<label for="caa11yp_options_allpages"><?php esc_html_e( 'Show site-wide', 'caa11yp' ); ?></label><br>
+	<input type="checkbox" id="caa11yp_options_preview" name="caa11yp_options[preview]" value="1" <?php checked( 1, $preview, true ); ?> />
+	<label for="caa11yp_options_preview"><?php esc_html_e( 'Show in Preview', 'caa11yp' ); ?></label><br>
+	<input type="checkbox" id="caa11yp_options_customizer" name="caa11yp_options[customizer]" value="1" <?php checked( 1, $customizer, true ); ?> />
+	<label for="caa11yp_options_customizer"><?php esc_html_e( 'Show in Customizer', 'caa11yp' ); ?></label><br>
 	<?php
-=======
-function caa11yp_views_cb( $args ) {
-  $options = get_option( 'caa11yp_options' );
-  $allpages = ( isset( $options['allpages'] ) ) ? $options['allpages'] : 0;
-  $preview = ( isset( $options['preview'] ) ) ? $options['preview'] : 0;
-  $customizer = ( isset( $options['customizer'] ) ) ? $options['customizer'] : 0;
-  ?>
-  <input type="checkbox" id="caa11yp_options_allpages" name="caa11yp_options[allpages]" value="1" <?php checked( 1, $allpages, true ); ?> />
-  <label for="caa11yp_options_allpages"><?php echo __( 'Show site-wide', 'caa11yp' ); ?></label><br>
-  <input type="checkbox" id="caa11yp_options_preview" name="caa11yp_options[preview]" value="1" <?php checked( 1, $preview, true ); ?> />
-  <label for="caa11yp_options_preview"><?php echo __( 'Show in Preview', 'caa11yp' ); ?></label><br>
-  <input type="checkbox" id="caa11yp_options_customizer" name="caa11yp_options[customizer]" value="1" <?php checked( 1, $customizer, true ); ?> />
-  <label for="caa11yp_options_customizer"><?php echo __( 'Show in Customizer', 'caa11yp' ); ?></label><br>
-  <?php
->>>>>>> feature_options_rearrange
 }
 
+/**
+ * Settings user roles callback.
+ *
+ * @param array $args Arguments.
+ */
 function caa11yp_user_roles_cb( $args ) {
 	$options    = get_option( 'caa11yp_options' );
 	$user_roles = ( isset( $options['user_roles'] ) ) ? $options['user_roles'] : true;
@@ -183,6 +147,12 @@ function caa11yp_user_roles_cb( $args ) {
 	endforeach;
 }
 
+/**
+ * Validate user input options
+ *
+ * @param  array $input User inputted fields.
+ * @return array $input User inputted fields.
+ */
 function caa11yp_options_validate_input( $input ) {
 	// check for no user roles selected (make it All selected).
 	if ( ! isset( $input['user_roles'] ) ) {
@@ -198,6 +168,15 @@ function caa11yp_options_validate_input( $input ) {
 		$input['user_roles'] = $user_roles;
 	}
 
+	/**
+	 * Validate admin options for Content Author Accessibility Preview.
+	 *
+	 * Check option inputs before saving them to the options.
+	 *
+	 * @since 1.0
+	 *
+	 * @param array $input User inputted fields.
+	 */
 	return apply_filters( 'caa11yp_options_validate_input', $input );
 }
 
@@ -303,7 +282,14 @@ function caa11yp_wp_head() {
 		}
 	}
 
-	// apply some filters in case anyone wants to hook in.
+	/**
+	 * Filter just before including the CSS.
+	 *
+	 * @since 1.0
+	 *
+	 * @param bool  $show_css True will show the accessibility CSS.
+	 * @param array $options  Plugin options.
+	 */
 	$show_css = apply_filters( 'caa11yp_before_show_in_head', $show_css, $options );
 
 	// finally, lets show this CSS if it is required.
