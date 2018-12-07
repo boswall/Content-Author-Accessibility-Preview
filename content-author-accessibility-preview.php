@@ -71,6 +71,7 @@ function caa11yp_settings_init() {
 		'caa11yp'
 	);
 
+<<<<<<< HEAD
 	add_settings_field(
 		'caa11yp_options[allpages]',
 		__( 'Show site-wide', 'caa11yp' ),
@@ -94,6 +95,15 @@ function caa11yp_settings_init() {
 		'caa11yp',
 		'caa11yp_section_visibility'
 	);
+=======
+  add_settings_field(
+    'caa11yp_options[views]',
+    __( 'Show on specific views', 'caa11yp' ),
+    'caa11yp_views_cb',
+    'caa11yp',
+    'caa11yp_section_visibility'
+  );
+>>>>>>> feature_options_rearrange
 
 	add_settings_field(
 		'caa11yp_options[user_roles]',
@@ -117,6 +127,7 @@ add_action( 'admin_init', 'caa11yp_settings_init' );
 function caa11yp_section_visibility_cb( $args ) {
 }
 
+<<<<<<< HEAD
 function caa11yp_allpages_cb( $args ) {
 	$options  = get_option( 'caa11yp_options' );
 	$allpages = ( isset( $options['allpages'] ) ) ? $options['allpages'] : 0;
@@ -139,6 +150,21 @@ function caa11yp_customizer_cb( $args ) {
 	?>
 	<input type="checkbox" name="caa11yp_options[customizer]" value="1" <?php checked( 1, $customizer, true ); ?> />
 	<?php
+=======
+function caa11yp_views_cb( $args ) {
+  $options = get_option( 'caa11yp_options' );
+  $allpages = ( isset( $options['allpages'] ) ) ? $options['allpages'] : 0;
+  $preview = ( isset( $options['preview'] ) ) ? $options['preview'] : 0;
+  $customizer = ( isset( $options['customizer'] ) ) ? $options['customizer'] : 0;
+  ?>
+  <input type="checkbox" id="caa11yp_options_allpages" name="caa11yp_options[allpages]" value="1" <?php checked( 1, $allpages, true ); ?> />
+  <label for="caa11yp_options_allpages"><?php echo __( 'Show site-wide', 'caa11yp' ); ?></label><br>
+  <input type="checkbox" id="caa11yp_options_preview" name="caa11yp_options[preview]" value="1" <?php checked( 1, $preview, true ); ?> />
+  <label for="caa11yp_options_preview"><?php echo __( 'Show in Preview', 'caa11yp' ); ?></label><br>
+  <input type="checkbox" id="caa11yp_options_customizer" name="caa11yp_options[customizer]" value="1" <?php checked( 1, $customizer, true ); ?> />
+  <label for="caa11yp_options_customizer"><?php echo __( 'Show in Customizer', 'caa11yp' ); ?></label><br>
+  <?php
+>>>>>>> feature_options_rearrange
 }
 
 function caa11yp_user_roles_cb( $args ) {
