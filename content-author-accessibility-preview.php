@@ -7,7 +7,7 @@
  * @license GPLv2
  *
  * Plugin Name:  Content Author Accessibility Preview
- * Plugin URI:   https://glaikit.co.uk/
+ * Plugin URI:   https://github.com/boswall/Content-Author-Accessibility-Preview
  * Description:  Flag up potential accessibility issues when your content authors preview the post or page that they have just added or amended
  * Version:      1.0
  * Author:       Matt Rose
