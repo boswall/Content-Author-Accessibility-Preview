@@ -212,7 +212,6 @@ function caa11yp_options_page_html() {
 			settings_fields( 'caa11yp' );
 			do_settings_sections( 'caa11yp' );
 			submit_button( esc_html( 'Save Settings', 'caa11yp' ) );
-			print_r( get_option( 'caa11yp_options' ) );
 			?>
 		</form>
 	</div>
