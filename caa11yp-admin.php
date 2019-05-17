@@ -97,9 +97,9 @@ function caa11yp_views_cb( $args ) {
 	?>
 	<input type="checkbox" id="caa11yp_options_allpages" name="caa11yp_options[allpages]" value="1" <?php checked( 1, $allpages, true ); ?> />
 	<label for="caa11yp_options_allpages"><?php esc_html_e( 'Show site-wide', 'caa11yp' ); ?></label><br>
-	<input type="checkbox" id="caa11yp_options_preview" name="caa11yp_options[preview]" value="1" <?php checked( 1, $preview, true ); ?> />
+	<input type="checkbox" id="caa11yp_options_preview" name="caa11yp_options[preview]" class="depends-allpages" value="1" <?php checked( 1, $preview, true ); ?> />
 	<label for="caa11yp_options_preview"><?php esc_html_e( 'Show in Preview', 'caa11yp' ); ?></label><br>
-	<input type="checkbox" id="caa11yp_options_customizer" name="caa11yp_options[customizer]" value="1" <?php checked( 1, $customizer, true ); ?> />
+	<input type="checkbox" id="caa11yp_options_customizer" name="caa11yp_options[customizer]" class="depends-allpages" value="1" <?php checked( 1, $customizer, true ); ?> />
 	<label for="caa11yp_options_customizer"><?php esc_html_e( 'Show in Customizer', 'caa11yp' ); ?></label><br>
 	<?php
 }
