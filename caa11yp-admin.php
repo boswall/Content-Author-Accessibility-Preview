@@ -29,6 +29,19 @@ function caa11yp_add_settings_link( $links, $file ) {
 add_filter( 'plugin_action_links', 'caa11yp_add_settings_link', 2, 10 );
 
 /**
+ * Enqueue a script on our settings page.
+ *
+ * @param int $hook Hook suffix for the current admin page.
+ */
+function caa11yp_admin_enqueue_scripts( $hook ) {
+	if ( 'settings_page_caa11yp' !== $hook ) {
+			return;
+	}
+	wp_enqueue_script( 'caa11yp_admin', plugin_dir_url( __FILE__ ) . 'assets/caa11yp-admin.js', array( 'jquery' ), CAA11YP_VERSION, true );
+}
+add_action( 'admin_enqueue_scripts', 'caa11yp_admin_enqueue_scripts' );
+
+/**
  * Register the settings page
  */
 function caa11yp_settings_init() {
