@@ -23,6 +23,8 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+define( 'CAA11YP_VERSION', 1 );
+
 require_once plugin_dir_path( __FILE__ ) . 'caa11yp-admin.php';
 
 /**
@@ -51,9 +53,9 @@ register_uninstall_hook( __FILE__, 'caa11yp_uninstall' );
 
 
 /**
- * Decide to include the CSS in the <head>
+ * Decide to include the CSS in the <head> and JS in the <footer>
  */
-function caa11yp_wp_head() {
+function caa11yp_enqueue_scripts() {
 	// quit if there's no user logged in.
 	if ( ! is_user_logged_in() ) {
 		return;
@@ -67,26 +69,26 @@ function caa11yp_wp_head() {
 	$customizer = ( isset( $options['customizer'] ) ) ? $options['customizer'] : false;
 	$user_roles = ( isset( $options['user_roles'] ) ) ? $options['user_roles'] : true;
 
-	$show_css = false;
+	$enqueue = false;
 
 	// main checks.
 	if ( $allpages ) {
-		$show_css = true;
+		$enqueue = true;
 	} elseif ( $preview && is_preview() ) {
-		$show_css = true;
+		$enqueue = true;
 	} elseif ( $customizer && is_customize_preview() ) {
-		$show_css = true;
+		$enqueue = true;
 	}
 
 	// check if we need to check for user roles.
-	if ( $show_css && is_array( $user_roles ) ) {
+	if ( $enqueue && is_array( $user_roles ) ) {
 		// check for user role in allowed roles list.
-		$show_css = false;
+		$enqueue = false;
 
 		$user = wp_get_current_user();
 		foreach ( $user->roles as $role ) {
 			if ( isset( $user_roles[ $role ] ) ) {
-				$show_css = true;
+				$enqueue = true;
 			}
 		}
 	}
@@ -96,17 +98,32 @@ function caa11yp_wp_head() {
 	 *
 	 * @since 1.0
 	 *
-	 * @param bool  $show_css True will show the accessibility CSS.
-	 * @param array $options  Plugin options.
+	 * @param bool  $enqueue True will include the accessibility CSS and JS in the page.
+	 * @param array $options Plugin options.
 	 */
-	$show_css = apply_filters( 'caa11yp_before_show_in_head', $show_css, $options );
+	$enqueue = apply_filters( 'caa11yp_before_enqueue_scripts', $enqueue, $options );
 
 	// finally, lets show this CSS if it is required.
-	if ( $show_css ) {
-		echo '<link rel="stylesheet" id="caa11yp" href="' . esc_url( plugins_url( 'assets/caa11yp.css', __FILE__ ) ) . '" type="text/css" media="all" />' . PHP_EOL;
+	if ( $enqueue ) {
+		wp_enqueue_script( 'caa11yp', plugins_url( 'assets/caa11yp.js', __FILE__ ), array(), CAA11YP_VERSION, true );
+		wp_register_style( 'caa11yp', plugins_url( 'assets/caa11yp.css', __FILE__ ), false, CAA11YP_VERSION );
+		wp_enqueue_style( 'caa11yp' );
+		// TODO: inline styling.
+		// $custom_css = '.mycolor{background: red;}';
+		// wp_add_inline_style( 'caa11yp', $custom_css );
+		// TODO: localize script.
+		// wp_localize_script(
+		// 	'caa11yp',
+		// 	'caa11ypOptions',
+		// 	array(
+		// 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		// 		'data_var_1' => 'value 1',
+		// 		'data_var_2' => 'value 2',
+		// 	)
+		// );
 	}
 }
-add_action( 'wp_head', 'caa11yp_wp_head', 100 );
+add_action( 'wp_enqueue_scripts', 'caa11yp_enqueue_scripts', 100 );
 
 /**
  * Add 'customize-preview' class to the body when in Customizer view
