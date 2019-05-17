@@ -119,10 +119,14 @@ function caa11yp_user_roles_cb( $args ) {
 			$user_role = ( isset( $user_roles[ $key ] ) ) ? $user_roles[ $key ] : 0;
 		}
 		?>
-		<input type="checkbox" id="caa11yp_options_user_roles_<?php echo esc_attr( $key ); ?>" name="caa11yp_options[user_roles][<?php echo esc_attr( $key ); ?>]" value="1" <?php checked( 1, $user_role, true ); ?> />
+		<input type="checkbox" id="caa11yp_options_user_roles_<?php echo esc_attr( $key ); ?>" class="caa11yp_options_user_roles" name="caa11yp_options[user_roles][<?php echo esc_attr( $key ); ?>]" value="1" <?php checked( 1, $user_role, true ); ?> />
 		<label for="caa11yp_options_user_roles_<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $role['name'] ); ?></label><br>
 		<?php
 	endforeach;
+	?>
+	<div id="setting-error-caa11yp_user_roles" class="error settings-error notice" style="display: none;">
+<p><strong>You must select at least 1 User Role.</strong></p></div>
+	<?php
 }
 
 /**
