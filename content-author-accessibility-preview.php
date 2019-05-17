@@ -103,7 +103,7 @@ function caa11yp_enqueue_scripts() {
 	 */
 	$enqueue = apply_filters( 'caa11yp_before_enqueue_scripts', $enqueue, $options );
 
-	// finally, lets show this CSS if it is required.
+	// finally, lets enqueue this CSS and JS if it is required.
 	if ( $enqueue ) {
 		wp_enqueue_script( 'caa11yp', plugins_url( 'assets/caa11yp.js', __FILE__ ), array(), CAA11YP_VERSION, true );
 		wp_register_style( 'caa11yp', plugins_url( 'assets/caa11yp.css', __FILE__ ), false, CAA11YP_VERSION );
@@ -111,19 +111,41 @@ function caa11yp_enqueue_scripts() {
 		// TODO: inline styling.
 		// $custom_css = '.mycolor{background: red;}';
 		// wp_add_inline_style( 'caa11yp', $custom_css );
-		// TODO: localize script.
-		// wp_localize_script(
-		// 	'caa11yp',
-		// 	'caa11ypOptions',
-		// 	array(
-		// 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
-		// 		'data_var_1' => 'value 1',
-		// 		'data_var_2' => 'value 2',
-		// 	)
-		// );
+
+		// localize script.
+		wp_localize_script(
+			'caa11yp',
+			'caa11ypOptions',
+			array(
+				'container' => caa11yp_get_container( $options ),
+				'selectors' => caa11yp_get_selectors( $options ),
+			)
+		);
 	}
 }
 add_action( 'wp_enqueue_scripts', 'caa11yp_enqueue_scripts', 100 );
+
+/**
+ * Get the CSS selector of the container for JS to work inside
+ *
+ * @param array $options plugin options.
+ * @return string container  CSS selector
+ */
+function caa11yp_get_container( $options ) {
+	$container = ( isset( $options['container'] ) ) ? $options['container'] : '';
+	return $container;
+}
+
+/**
+ * Get the array of selectors for JS to work with
+ *
+ * @param array $options plugin options.
+ * @return array selectors, label, warning level, etc
+ */
+function caa11yp_get_selectors( $options ) {
+	$selectors = ( isset( $options['selectors'] ) ) ? $options['selectors'] : array();
+	return $selectors;
+}
 
 /**
  * Add 'customize-preview' class to the body when in Customizer view
