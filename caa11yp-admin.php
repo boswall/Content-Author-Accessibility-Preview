@@ -69,6 +69,14 @@ function caa11yp_settings_init() {
 		'caa11yp',
 		'caa11yp_section_visibility'
 	);
+
+	add_settings_field(
+		'caa11yp_options[container]',
+		__( 'Container', 'caa11yp' ),
+		'caa11yp_container_cb',
+		'caa11yp',
+		'caa11yp_section_visibility'
+	);
 }
 add_action( 'admin_init', 'caa11yp_settings_init' );
 
@@ -126,6 +134,20 @@ function caa11yp_user_roles_cb( $args ) {
 	?>
 	<div id="setting-error-caa11yp_user_roles" class="error settings-error notice" style="display: none;">
 <p><strong>You must select at least 1 User Role.</strong></p></div>
+	<?php
+}
+
+/**
+ * Settings container callback.
+ *
+ * @param array $args Arguments.
+ */
+function caa11yp_container_cb( $args ) {
+	$options   = get_option( 'caa11yp_options' );
+	$container = ( isset( $options['container'] ) ) ? $options['container'] : '';
+	?>
+	<input id="caa11yp_options_container" name="caa11yp_options[container]" size="40" type="text" value="<?php echo esc_html( $container ); ?>" /><br>
+	<label for="caa11yp_options_container">Enter a CSS selector of the main content area. Will limit the checks to that area. For example: <code>#primary</code>, <code>#main</code> or <code>.site-content</code> depending on your theme.</label>
 	<?php
 }
 
