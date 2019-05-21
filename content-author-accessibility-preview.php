@@ -108,9 +108,6 @@ function caa11yp_enqueue_scripts() {
 		wp_enqueue_script( 'caa11yp', plugins_url( 'assets/caa11yp.js', __FILE__ ), array(), CAA11YP_VERSION, true );
 		wp_register_style( 'caa11yp', plugins_url( 'assets/caa11yp.css', __FILE__ ), false, CAA11YP_VERSION );
 		wp_enqueue_style( 'caa11yp' );
-		// TODO: inline styling.
-		// $custom_css = '.mycolor{background: red;}';
-		// wp_add_inline_style( 'caa11yp', $custom_css );
 
 		// localize script.
 		wp_localize_script(
@@ -118,7 +115,7 @@ function caa11yp_enqueue_scripts() {
 			'caa11ypOptions',
 			array(
 				'container' => caa11yp_get_container( $options ),
-				'selectors' => caa11yp_get_selectors( $options ),
+				'tests'     => caa11yp_get_tests( $options ),
 			)
 		);
 	}
@@ -137,14 +134,101 @@ function caa11yp_get_container( $options ) {
 }
 
 /**
- * Get the array of selectors for JS to work with
+ * Get the array of tests for JS to work with
  *
  * @param array $options plugin options.
- * @return array selectors, label, warning level, etc
+ * @return array tests, label, warning level, etc
  */
-function caa11yp_get_selectors( $options ) {
-	$selectors = ( isset( $options['selectors'] ) ) ? $options['selectors'] : array();
-	return $selectors;
+function caa11yp_get_tests( $options ) {
+	// TODO: Add option to select/deselect tests.
+	$tests = caa11yp_get_tests_available();
+	return $tests;
+}
+
+/**
+ * Get the array of all available tests for JS to work with
+ *
+ * @return array id, selector, label, severity
+ */
+function caa11yp_get_tests_available() {
+	// TODO: Internationalization of labels
+	// TODO: Add filters.
+	$tests = array(
+		array(
+			'id'       => 'img-empty-alt',
+			'selector' => 'img[alt=""]',
+			'label'    => 'alt attribute is empty',
+			'severity' => 'low',
+		),
+		array(
+			'id'       => 'a-new-window',
+			'selector' => 'a[target]',
+			'label'    => 'link opens new window',
+			'severity' => 'low',
+		),
+		array(
+			'id'       => 'a-has-title',
+			'selector' => 'a[title]',
+			'label'    => 'has title attribute',
+			'severity' => 'high',
+		),
+		array(
+			'id'       => 'img-no-alt',
+			'selector' => 'img:not([alt])',
+			'label'    => 'alt attribute is missing',
+			'severity' => 'high',
+		),
+		array(
+			'id'       => 'img-has-title',
+			'selector' => 'img[title]',
+			'label'    => 'has title attribute',
+			'severity' => 'high',
+		),
+		array(
+			'id'       => 'img-svg-no-role',
+			'selector' => 'img[src$=".svg"]:not([role="img"])',
+			'label'    => 'missing role="img"',
+			'severity' => 'high',
+		),
+		array(
+			'id'       => 'svg-no-role',
+			'selector' => 'svg:not([role="img"])',
+			'label'    => 'missing role="img"',
+			'severity' => 'high',
+		),
+		array(
+			'id'       => 'heading-empty',
+			'selector' => 'h1:empty, h2:empty, h3:empty,
+			h4:empty, h5:empty, h6:empty',
+			'label'    => 'empty heading',
+			'severity' => 'high',
+		),
+		array(
+			'id'       => 'a-empty',
+			'selector' => 'a:not([name]):empty',
+			'label'    => 'empty link',
+			'severity' => 'high',
+		),
+		array(
+			'id'       => 'button-empty',
+			'selector' => 'button:empty',
+			'label'    => 'empty button',
+			'severity' => 'high',
+		),
+		array(
+			'id'       => 'th-empty',
+			'selector' => 'th:empty',
+			'label'    => 'empty header cell',
+			'severity' => 'high',
+		),
+		array(
+			'id'       => 'td-empty',
+			'selector' => 'td:empty',
+			'label'    => 'empty data cell',
+			'severity' => 'low',
+		),
+	);
+	return $tests;
 }
 
 /**
