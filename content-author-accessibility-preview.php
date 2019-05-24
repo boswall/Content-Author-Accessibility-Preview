@@ -23,7 +23,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'CAA11YP_VERSION', 1 );
+define( 'CAA11YP_VERSION', 1.1 );
 
 require_once plugin_dir_path( __FILE__ ) . 'caa11yp-admin.php';
 
