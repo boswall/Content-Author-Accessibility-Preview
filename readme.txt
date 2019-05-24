@@ -3,7 +3,7 @@ Contributors: boswall,grahamarmfield
 Donate link: https://github.com/boswall/Content-Author-Accessibility-Preview
 Tags: accessibility, accessible, wcag, a11y, section508, alt text, labels, aria, preview
 Requires at least: 4.6
-Tested up to: 5.1.1
+Tested up to: 5.2.1
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -15,13 +15,14 @@ Flag up potential accessibility issues when your content authors preview the pos
 Flag up potential accessibility issues when your content authors preview the post or page that they have just added or amended.
 
 Currently contains checks for:
+
 * Images with empty alt attributes
 * Links that open new windows
 * Links that have a title attribute
 * images that have no alt attribute
 * images that have the title attribute
-* svg files that don\'t have role=\"img\"
-* inline svgs that don\'t have role=\"img\"
+* svg files that don`t have role="img"
+* inline svgs that don`t have role="img"
 * empty headings
 * empty links
 * empty buttons
@@ -63,9 +64,17 @@ No. By default, issues will only be highlighted to anyone who is logged in. You 
 
 * Visible while editing in Gutenburg
 * Fix false positives in the admin bar
-* Limit to the content area of the page
+* ~~Limit to the content area of the page~~
 * Show a legend
+* Animated flashing boarders - to really make it obvious
+* Options to hide certain tests
 [Suggest a change or feature!](https://github.com/boswall/Content-Author-Accessibility-Preview/issues)
+
+= 1.1.0 =
+
+* Added a container option to limit the tests to a specific area
+* All highlights are found using JS (not pure CSS anymore)
+* Added labels to highlighted elements
 
 = 1.0.0 =
 
