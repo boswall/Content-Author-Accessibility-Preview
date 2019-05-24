@@ -133,7 +133,7 @@ function caa11yp_user_roles_cb( $args ) {
 	endforeach;
 	?>
 	<div id="setting-error-caa11yp_user_roles" class="error settings-error notice" style="display: none;">
-<p><strong>You must select at least 1 User Role.</strong></p></div>
+<p><strong><?php esc_html_e( 'You must select at least 1 User Role.', 'caa11yp' ); ?></strong></p></div>
 	<?php
 }
 
@@ -147,7 +147,7 @@ function caa11yp_container_cb( $args ) {
 	$container = ( isset( $options['container'] ) ) ? $options['container'] : '';
 	?>
 	<input id="caa11yp_options_container" name="caa11yp_options[container]" size="40" type="text" value="<?php echo esc_html( $container ); ?>" /><br>
-	<label for="caa11yp_options_container">Enter a CSS selector of the main content area. Will limit the checks to that area. For example: <code>#primary</code>, <code>#main</code> or <code>.site-content</code> depending on your theme.</label>
+	<label for="caa11yp_options_container"><?php _e( 'Enter a CSS selector of the main content area. Will limit the checks to that area. For example: <code>#primary</code>, <code>#main</code> or <code>.site-content</code> depending on your theme.', 'caa11yp' ); // phpcs:ignore WordPress.Security.EscapeOutput.UnsafePrintingFunction ?></label>
 	<?php
 }
 
@@ -189,8 +189,8 @@ function caa11yp_options_validate_input( $input ) {
  */
 function caa11yp_options_page() {
 	add_options_page(
-		'Content Author Accessibility Preview',
-		'Content Author Accessibility Preview',
+		__( 'Content Author Accessibility Preview', 'caa11yp' ),
+		__( 'Content Author Accessibility Preview', 'caa11yp' ),
 		'manage_options',
 		'caa11yp',
 		'caa11yp_options_page_html'
@@ -225,13 +225,13 @@ function caa11yp_options_page_html() {
 		<p><?php esc_html_e( 'Site visitors who are not logged in will not see the potential issues.', 'caa11yp' ); ?></p>
 		<p><?php esc_html_e( 'Currently contains checks for:', 'caa11yp' ); ?></p>
 		<ul class="ul-disc">
-			<li><?php esc_html_e( 'Images with empty alt attributes', 'caa11yp' ); ?></li>
+			<li><?php _e( 'Images with empty <code>alt</code> attributes', 'caa11yp' ); // phpcs:ignore WordPress.Security.EscapeOutput.UnsafePrintingFunction ?></li>
 			<li><?php esc_html_e( 'Links that open new windows', 'caa11yp' ); ?></li>
-			<li><?php esc_html_e( 'Links that have a title attribute', 'caa11yp' ); ?></li>
-			<li><?php esc_html_e( 'images that have no alt attribute', 'caa11yp' ); ?></li>
-			<li><?php esc_html_e( 'images that have the title attribute', 'caa11yp' ); ?></li>
-			<li><?php esc_html_e( 'svg files that don\'t have role="img"', 'caa11yp' ); ?></li>
-			<li><?php esc_html_e( 'inline svgs that don\'t have role="img"', 'caa11yp' ); ?></li>
+			<li><?php _e( 'Links that have a <code>title</code> attribute', 'caa11yp' ); // phpcs:ignore WordPress.Security.EscapeOutput.UnsafePrintingFunction ?></li>
+			<li><?php _e( 'images that have no <code>alt</code> attribute', 'caa11yp' ); // phpcs:ignore WordPress.Security.EscapeOutput.UnsafePrintingFunction ?></li>
+			<li><?php _e( 'images that have a <code>title</code> attribute', 'caa11yp' ); // phpcs:ignore WordPress.Security.EscapeOutput.UnsafePrintingFunction ?></li>
+			<li><?php _e( 'svg files that don`t have <code>role="img"</code>', 'caa11yp' ); // phpcs:ignore WordPress.Security.EscapeOutput.UnsafePrintingFunction ?></li>
+			<li><?php _e( 'inline svgs that don`t have <code>role="img"</code>', 'caa11yp' ); // phpcs:ignore WordPress.Security.EscapeOutput.UnsafePrintingFunction ?></li>
 			<li><?php esc_html_e( 'empty headings', 'caa11yp' ); ?></li>
 			<li><?php esc_html_e( 'empty links', 'caa11yp' ); ?></li>
 			<li><?php esc_html_e( 'empty buttons', 'caa11yp' ); ?></li>

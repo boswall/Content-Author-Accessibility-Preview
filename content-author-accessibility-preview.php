@@ -152,7 +152,6 @@ function caa11yp_get_tests( $options ) {
  * @return array id, selector, label, severity
  */
 function caa11yp_get_tests_available( $options ) {
-	// TODO: Internationalization of labels
 	// TODO: Add filters.
 	if ( ! $options ) {
 		$options = get_option( 'caa11yp_options' );
@@ -164,73 +163,73 @@ function caa11yp_get_tests_available( $options ) {
 		array(
 			'id'       => 'img-empty-alt',
 			'selector' => $container . ' img[alt=""]',
-			'label'    => 'alt attribute is empty',
+			'label'    => __( 'alt attribute is empty', 'caa11yp' ),
 			'severity' => 'low',
 		),
 		array(
 			'id'       => 'a-new-window',
 			'selector' => $container . ' a[target]',
-			'label'    => 'link opens new window',
+			'label'    => __( 'link opens new window', 'caa11yp' ),
 			'severity' => 'low',
 		),
 		array(
 			'id'       => 'a-has-title',
 			'selector' => $container . ' a[title]',
-			'label'    => 'has title attribute',
+			'label'    => __( 'has title attribute', 'caa11yp' ),
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'img-no-alt',
 			'selector' => $container . ' img:not([alt])',
-			'label'    => 'alt attribute is missing',
+			'label'    => __( 'alt attribute is missing', 'caa11yp' ),
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'img-has-title',
 			'selector' => $container . ' img[title]',
-			'label'    => 'has title attribute',
+			'label'    => __( 'has title attribute', 'caa11yp' ),
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'img-svg-no-role',
 			'selector' => $container . ' img[src$=".svg"]:not([role="img"])',
-			'label'    => 'missing role="img"',
+			'label'    => __( 'missing role="img"', 'caa11yp' ),
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'svg-no-role',
 			'selector' => $container . ' svg:not([role="img"])',
-			'label'    => 'missing role="img"',
+			'label'    => __( 'missing role="img"', 'caa11yp' ),
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'heading-empty',
 			'selector' => $container . ' h1:empty, ' . $container . ' h2:empty, ' . $container . ' h3:empty, ' . $container . ' h4:empty, ' . $container . ' h5:empty, ' . $container . ' h6:empty',
-			'label'    => 'empty heading',
+			'label'    => __( 'empty heading', 'caa11yp' ),
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'a-empty',
 			'selector' => $container . ' a:not([name]):empty',
-			'label'    => 'empty link',
+			'label'    => __( 'empty link', 'caa11yp' ),
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'button-empty',
 			'selector' => $container . ' button:empty',
-			'label'    => 'empty button',
+			'label'    => __( 'empty button', 'caa11yp' ),
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'th-empty',
 			'selector' => $container . ' th:empty',
-			'label'    => 'empty header cell',
+			'label'    => __( 'empty header cell', 'caa11yp' ),
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'td-empty',
 			'selector' => $container . ' td:empty',
-			'label'    => 'empty data cell',
+			'label'    => __( 'empty data cell', 'caa11yp' ),
 			'severity' => 'low',
 		),
 	);
