@@ -1,6 +1,7 @@
 /* CSS to flag some accessibility issues when content authors preview posts and pages. */
 
-.caa11yp-error {
+.caa11yp-error,
+.caa11yp-error:hover {
   display: inline-block !important;
   position: relative !important;
   outline: solid 3px gold;
@@ -14,13 +15,16 @@
   background-color: white;
   font-size: 0.5em;
 } */
-.caa11yp-error-low {
+.caa11yp-error-low,
+.caa11yp-error-low:hover {
   outline-color: gold;
 }
-.caa11yp-error-medium {
+.caa11yp-error-medium,
+.caa11yp-error-medium:hover {
   outline-color: orange;
 }
-.caa11yp-error-high {
+.caa11yp-error-high,
+.caa11yp-error-high:hover {
   outline-color: red;
 }
 
@@ -34,24 +38,31 @@
   direction: rtl;
   margin: 0 100% 0 0;
   list-style: none;
-  transition: transform 0.5s;
-  transform: scaleY(0);
-  transform-origin: 50% 0%;
+}
+@media (any-hover: hover) {
+  /* If we have a hover pointing device */
+  .caa11yp-messages ul {
+    transition: transform 0.5s;
+    transform: scaleY(0);
+    transform-origin: 50% 0%;
+  }
+  .caa11yp-error:active + .caa11yp-messages ul,
+  .caa11yp-error:focus + .caa11yp-messages ul,
+  .caa11yp-error:hover + .caa11yp-messages ul,
+  .caa11yp-messages:active ul,
+  .caa11yp-messages:focus ul,
+  .caa11yp-messages:hover ul {
+    transform: scaleY(1);
+  }
 }
 .caa11yp-messages li {
   background-color: white;
   font-size: 0.9em;
+  font-family: sans-serif;
+  padding: 0 0.4em;
   width: auto;
   width: fit-content;
   width: max-content;
-}
-.caa11yp-error:active + .caa11yp-messages ul,
-.caa11yp-error:focus + .caa11yp-messages ul,
-.caa11yp-error:hover + .caa11yp-messages ul,
-.caa11yp-messages:active ul,
-.caa11yp-messages:focus ul,
-.caa11yp-messages:hover ul {
-  transform: scaleY(1);
 }
 .caa11yp-messages li.low {
   background-color: gold;
