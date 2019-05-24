@@ -141,89 +141,95 @@ function caa11yp_get_container( $options ) {
  */
 function caa11yp_get_tests( $options ) {
 	// TODO: Add option to select/deselect tests.
-	$tests = caa11yp_get_tests_available();
+	$tests = caa11yp_get_tests_available( $options );
 	return $tests;
 }
 
 /**
  * Get the array of all available tests for JS to work with
  *
+ * @param array $options plugin options.
  * @return array id, selector, label, severity
  */
-function caa11yp_get_tests_available() {
+function caa11yp_get_tests_available( $options ) {
 	// TODO: Internationalization of labels
 	// TODO: Add filters.
+	if ( ! $options ) {
+		$options = get_option( 'caa11yp_options' );
+	}
+
+	$container = caa11yp_get_container( $options );
+
 	$tests = array(
 		array(
 			'id'       => 'img-empty-alt',
-			'selector' => 'img[alt=""]',
+			'selector' => $container . ' img[alt=""]',
 			'label'    => 'alt attribute is empty',
 			'severity' => 'low',
 		),
 		array(
 			'id'       => 'a-new-window',
-			'selector' => 'a[target]',
+			'selector' => $container . ' a[target]',
 			'label'    => 'link opens new window',
 			'severity' => 'low',
 		),
 		array(
 			'id'       => 'a-has-title',
-			'selector' => 'a[title]',
+			'selector' => $container . ' a[title]',
 			'label'    => 'has title attribute',
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'img-no-alt',
-			'selector' => 'img:not([alt])',
+			'selector' => $container . ' img:not([alt])',
 			'label'    => 'alt attribute is missing',
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'img-has-title',
-			'selector' => 'img[title]',
+			'selector' => $container . ' img[title]',
 			'label'    => 'has title attribute',
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'img-svg-no-role',
-			'selector' => 'img[src$=".svg"]:not([role="img"])',
+			'selector' => $container . ' img[src$=".svg"]:not([role="img"])',
 			'label'    => 'missing role="img"',
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'svg-no-role',
-			'selector' => 'svg:not([role="img"])',
+			'selector' => $container . ' svg:not([role="img"])',
 			'label'    => 'missing role="img"',
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'heading-empty',
-			'selector' => 'h1:empty, h2:empty, h3:empty,
-			h4:empty, h5:empty, h6:empty',
+			'selector' => $container . ' h1:empty, ' . $container . ' h2:empty, ' . $container . ' h3:empty, ' . $container . ' h4:empty, ' . $container . ' h5:empty, ' . $container . ' h6:empty',
 			'label'    => 'empty heading',
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'a-empty',
-			'selector' => 'a:not([name]):empty',
+			'selector' => $container . ' a:not([name]):empty',
 			'label'    => 'empty link',
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'button-empty',
-			'selector' => 'button:empty',
+			'selector' => $container . ' button:empty',
 			'label'    => 'empty button',
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'th-empty',
-			'selector' => 'th:empty',
+			'selector' => $container . ' th:empty',
 			'label'    => 'empty header cell',
 			'severity' => 'high',
 		),
 		array(
 			'id'       => 'td-empty',
-			'selector' => 'td:empty',
+			'selector' => $container . ' td:empty',
 			'label'    => 'empty data cell',
 			'severity' => 'low',
 		),

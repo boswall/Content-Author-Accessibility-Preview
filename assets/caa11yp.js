@@ -29,7 +29,7 @@ function insertAfter(el, referenceNode) {
 
 var caa11ypLoad = function(){
   caa11ypOptions.tests.forEach(function(test){
-    document.querySelectorAll(caa11ypOptions.container + ' ' + test.selector).forEach(function(result){
+    document.querySelectorAll(test.selector).forEach(function(result){
       result.classList.add("caa11yp-error");
       result.classList.add("caa11yp-error-" + test.severity);
       result.classList.add("caa11yp-" + test.id);
