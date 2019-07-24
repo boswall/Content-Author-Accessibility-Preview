@@ -168,7 +168,7 @@ function caa11yp_get_tests_available( $options ) {
 		),
 		array(
 			'id'       => 'a-new-window',
-			'selector' => $container . ' a[target]',
+			'selector' => $container . ' a[target]:not([target="_self"])',
 			'label'    => __( 'link opens new window', 'caa11yp' ),
 			'severity' => 'low',
 		),
