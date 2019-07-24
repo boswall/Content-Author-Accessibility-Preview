@@ -57,6 +57,7 @@
 }
 .caa11yp-messages li {
   background-color: white;
+  color: black;
   font-size: 0.9em;
   font-family: sans-serif;
   padding: 0 0.4em;
@@ -72,6 +73,7 @@
 }
 .caa11yp-messages li.high {
   background-color: red;
+  color: white;
 }
 
 .caa11yp-heading-empty,
