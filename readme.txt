@@ -70,6 +70,11 @@ No. By default, issues will only be highlighted to anyone who is logged in. You 
 * Options to hide certain tests
 [Suggest a change or feature!](https://github.com/boswall/Content-Author-Accessibility-Preview/issues)
 
+= 1.1.1 =
+
+* Bug fix
+* Improved colour contrast on labels
+
 = 1.1.0 =
 
 * Added a container option to limit the tests to a specific area

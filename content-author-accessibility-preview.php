@@ -9,7 +9,7 @@
  * Plugin Name:  Content Author Accessibility Preview
  * Plugin URI:   https://github.com/boswall/Content-Author-Accessibility-Preview
  * Description:  Flag up potential accessibility issues when your content authors preview the post or page that they have just added or amended
- * Version:      1.1
+ * Version:      1.1.1
  * Author:       Matt Rose
  * Author URI:   https://glaikit.co.uk/
  * License:      GPL2
@@ -23,7 +23,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'CAA11YP_VERSION', 1.1 );
+define( 'CAA11YP_VERSION', '1.1.1' );
 
 require_once plugin_dir_path( __FILE__ ) . 'caa11yp-admin.php';
 
