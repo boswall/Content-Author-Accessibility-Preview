@@ -67,6 +67,7 @@ function caa11yp_enqueue_scripts() {
 	$allpages   = ( isset( $options['allpages'] ) ) ? $options['allpages'] : false;
 	$preview    = ( isset( $options['preview'] ) ) ? $options['preview'] : false;
 	$customizer = ( isset( $options['customizer'] ) ) ? $options['customizer'] : false;
+	$gutenburg  = ( isset( $options['gutenburg'] ) ) ? $options['gutenburg'] : false;
 	$user_roles = ( isset( $options['user_roles'] ) ) ? $options['user_roles'] : true;
 
 	$enqueue = false;
@@ -77,6 +78,8 @@ function caa11yp_enqueue_scripts() {
 	} elseif ( $preview && is_preview() ) {
 		$enqueue = true;
 	} elseif ( $customizer && is_customize_preview() ) {
+		$enqueue = true;
+	} elseif ( $gutenburg && caa11yp_is_gutenburg() ) {
 		$enqueue = true;
 	}
 
@@ -123,6 +126,37 @@ function caa11yp_enqueue_scripts() {
 add_action( 'wp_enqueue_scripts', 'caa11yp_enqueue_scripts', 100 );
 
 /**
+ * Decide to include the CSS and JS for the Gutenburg editor
+ */
+function caa11yp_enqueue_block_editor_scripts() {
+	add_filter( 'caa11yp_get_container', 'caa11yp_get_block_editor_container' );
+	add_filter( 'caa11yp_is_gutenburg', '__return_true' );
+	caa11yp_enqueue_scripts();
+}
+add_action( 'enqueue_block_editor_assets', 'caa11yp_enqueue_block_editor_scripts', 100 );
+
+function caa11yp_get_block_editor_container( $container ) {
+	return '.edit-post-layout__content';
+}
+
+/**
+* Is the current page the Block Editor (Gutenburg).
+*
+* @return bool $is_gutenburg True for Gutenburn on this page.
+*/
+function caa11yp_is_gutenburg() {
+	/**
+	 * Is the current page the Block Editor (Gutenburg).
+	 *
+	 * @since 1.2
+	 *
+	 * @param bool $is_gutenburg True for Gutenburn on this page.
+	 */
+	$is_gutenburg = apply_filters( 'caa11yp_is_gutenburg', false );
+	return $is_gutenburg;
+}
+
+/**
  * Get the CSS selector of the container for JS to work inside
  *
  * @param array $options plugin options.
@@ -130,6 +164,15 @@ add_action( 'wp_enqueue_scripts', 'caa11yp_enqueue_scripts', 100 );
  */
 function caa11yp_get_container( $options ) {
 	$container = ( isset( $options['container'] ) ) ? $options['container'] : '';
+	/**
+	 * CSS selector of the container for JS to work inside.
+	 *
+	 * @since 1.2
+	 *
+	 * @param string $container CSS selector of the container.
+	 * @param array  $options Plugin options.
+	 */
+	$container = apply_filters( 'caa11yp_get_container', $container, $options );
 	return $container;
 }
 

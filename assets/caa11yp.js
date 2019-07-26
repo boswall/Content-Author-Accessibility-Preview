@@ -23,6 +23,21 @@ document.addEventListener("load", function(){
 
 });
 
+if (typeof wp.data !== 'undefined') {
+  const getBlockList = () => wp.data.select( 'core/editor' ).getBlocks();
+  let blockList = getBlockList();
+  wp.data.subscribe(() => {
+    const newBlockList = getBlockList();
+    const blockListChanged = newBlockList !== blockList;
+    blockList = newBlockList;
+    if ( blockListChanged ) {
+      // You can trigger here any behavior when the block list in the post changes.
+      caa11ypClear();
+      caa11ypLoad();
+    }
+  });
+}
+
 function insertAfter(el, referenceNode) {
     referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
 }
@@ -37,6 +52,7 @@ var caa11ypLoad = function(){
       if (result.nextSibling==null || result.nextSibling.className != 'caa11yp-messages') {
         var messagesWrapper = document.createElement('div');
         var messagesBox = document.createElement('ul');
+        messagesBox.setAttribute('class', 'caa11yp-box');
         messagesWrapper.appendChild(messagesBox);
         messagesWrapper.setAttribute('class', 'caa11yp-messages');
         insertAfter(messagesWrapper, result);
@@ -46,4 +62,21 @@ var caa11ypLoad = function(){
 
     });
   });
+};
+
+var caa11ypClear = function(){
+    document.querySelectorAll(".caa11yp-error").forEach(function(result){
+      result.classList.forEach(function(className){
+        if (className.startsWith('caa11yp-')) {
+          result.classList.remove(className);
+        }
+      });
+
+    });
+    document.querySelectorAll(".caa11yp-messages").forEach(function(el){
+      el.parentNode.removeChild(el);
+    });
+    document.querySelectorAll(".caa11yp-box").forEach(function(el){
+      el.parentNode.removeChild(el);
+    });
 };

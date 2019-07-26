@@ -36,8 +36,8 @@
 }
 .caa11yp-messages ul {
   direction: rtl;
-  margin: 0 100% 0 0;
-  list-style: none;
+  margin: 0 100% 0 0 !important;
+  list-style: none !important;
 }
 @media (any-hover: hover) {
   /* If we have a hover pointing device */
