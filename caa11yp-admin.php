@@ -15,18 +15,20 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Put settings page link on plugin actions
  *
- * @param  array  $links HTML links.
- * @param  string $file Filename of plugin.
+ * @param array $links HTML links.
  * @return array $links
  */
-function caa11yp_add_settings_link( $links, $file ) {
-	if ( plugin_basename( __FILE__ ) === $file ) {
-		$settings_link = '<a href="' . admin_url( 'options-general.php?page=caa11yp' ) . '">' . __( 'Settings', 'caa11yp' ) . '</a>';
-		array_unshift( $links, $settings_link );
-	}
+function caa11yp_add_settings_link( $links ) {
+	$links = array_merge(
+		array(
+			'<a href="' . admin_url( 'options-general.php?page=caa11yp' ) . '">' . __( 'Settings', 'caa11yp' ) . '</a>',
+		),
+		$links
+	);
 	return $links;
 }
-add_filter( 'plugin_action_links', 'caa11yp_add_settings_link', 2, 10 );
+add_action( 'plugin_action_links_' . CAA11YP_PLUGIN_BASENAME, 'caa11yp_add_settings_link' );
+
 
 /**
  * Enqueue a script on our settings page.
