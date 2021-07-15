@@ -79,6 +79,14 @@ function caa11yp_settings_init() {
 		'caa11yp',
 		'caa11yp_section_visibility'
 	);
+
+	add_settings_field(
+		'caa11yp_options[tests]',
+		__( 'Tests', 'caa11yp' ),
+		'caa11yp_tests_cb',
+		'caa11yp',
+		'caa11yp_section_visibility'
+	);
 }
 add_action( 'admin_init', 'caa11yp_settings_init' );
 
@@ -154,6 +162,36 @@ function caa11yp_container_cb( $args ) {
 }
 
 /**
+ * Settings tests callback.
+ *
+ * @param array $args Arguments.
+ */
+function caa11yp_tests_cb( $args ) {
+	$options   = get_option( 'caa11yp_options' );
+	$tests     = ( isset( $options['tests'] ) ) ? $options['tests'] : true;
+	$all_tests = caa11yp_get_tests_available( $options );
+	foreach ( $all_tests as $test ) :
+		if ( true === $tests ) {
+			$test_selected = true;
+		} else {
+			$test_selected = ( isset( $tests[ $test->id ] ) ) ? $tests[ $test->id ] : 0;
+		}
+		?>
+		<input type="checkbox" id="caa11yp_options_tests_<?php echo esc_attr( $test->id ); ?>" class="caa11yp_options_tests" name="caa11yp_options[tests][<?php echo esc_attr( $test->id ); ?>]" value="1" <?php checked( 1, $test_selected, true ); ?> />
+		<label for="caa11yp_options_tests_<?php echo esc_attr( $test->id ); ?>">
+			<strong><?php echo esc_html( $test->label ); ?>: </strong>
+			<?php echo esc_html( $test->description ); ?>
+		</label><br>
+		<?php
+	endforeach;
+	?>
+	<div id="setting-error-caa11yp_tests" class="error settings-error notice" style="display: none;">
+		<p><strong><?php esc_html_e( 'You must select at least 1 Test.', 'caa11yp' ); ?></strong></p>
+	</div>
+	<?php
+}
+
+/**
  * Validate user input options
  *
  * @param  array $input User inputted fields.
@@ -172,6 +210,20 @@ function caa11yp_options_validate_input( $input ) {
 			}
 		}
 		$input['user_roles'] = $user_roles;
+	}
+
+	// check for no tests selected (make it All selected).
+	if ( ! isset( $input['tests'] ) ) {
+		$input['tests'] = true;
+	} else {
+		// check for ALL tests selected.
+		$tests = true;
+		foreach ( caa11yp_get_tests_available() as $test ) {
+			if ( ! array_key_exists( $test->id, $input['tests'] ) ) {
+				$tests = $input['tests'];
+			}
+		}
+		$input['tests'] = $tests;
 	}
 
 	/**

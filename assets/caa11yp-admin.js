@@ -18,6 +18,15 @@
           $('input#submit').attr('disabled', false);
         }
       });
+      $('input.caa11yp_options_tests').change(function(){
+        if ($('input.caa11yp_options_tests:checked').length == 0) {
+          $('#setting-error-caa11yp_tests').show();
+          $('input#submit').attr('disabled', true);
+        } else {
+          $('#setting-error-caa11yp_tests').hide();
+          $('input#submit').attr('disabled', false);
+        }
+      });
     });
 
 })(jQuery);

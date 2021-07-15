@@ -9,7 +9,7 @@
  * Plugin Name:  Content Author Accessibility Preview
  * Plugin URI:   https://github.com/boswall/Content-Author-Accessibility-Preview
  * Description:  Flag up potential accessibility issues when your content authors preview the post or page that they have just added or amended
- * Version:      1.1.1
+ * Version:      1.2.0
  * Author:       Matt Rose
  * Author URI:   https://glaikit.co.uk/
  * License:      GPL2
@@ -27,6 +27,7 @@ define( 'CAA11YP_VERSION', '1.1.1' );
 define( 'CAA11YP_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 require_once plugin_dir_path( __FILE__ ) . 'caa11yp-admin.php';
+require_once plugin_dir_path( __FILE__ ) . 'class-caa11yp-test.php';
 
 /**
  * Install - check for saved options
@@ -141,8 +142,17 @@ function caa11yp_get_container( $options ) {
  * @return array tests, label, warning level, etc
  */
 function caa11yp_get_tests( $options ) {
-	// TODO: Add option to select/deselect tests.
-	$tests = caa11yp_get_tests_available( $options );
+	$tests_selected = ( isset( $options['tests'] ) ) ? $options['tests'] : true;
+	$all_tests      = caa11yp_get_tests_available( $options );
+	if ( true === $tests_selected ) {
+		return $all_tests;
+	}
+	$tests = array();
+	foreach ( $all_tests as $test ) :
+		if ( isset( $tests_selected[ $test->id ] ) && $tests_selected[ $test->id ] ) {
+			$tests[] = $test;
+		}
+	endforeach;
 	return $tests;
 }
 
@@ -152,7 +162,7 @@ function caa11yp_get_tests( $options ) {
  * @param array $options plugin options.
  * @return array id, selector, label, severity
  */
-function caa11yp_get_tests_available( $options ) {
+function caa11yp_get_tests_available( $options = false ) {
 	// TODO: Add filters.
 	if ( ! $options ) {
 		$options = get_option( 'caa11yp_options' );
@@ -160,79 +170,126 @@ function caa11yp_get_tests_available( $options ) {
 
 	$container = caa11yp_get_container( $options );
 
-	$tests = array(
+	$tests                    = array();
+	$tests[]   = new Caa11yp_Test(
+		'img-empty-alt',
+		__( 'alt attribute is empty', 'caa11yp' ),
+		__( 'Images with empty alt attributes', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'low',
 		array(
-			'id'       => 'img-empty-alt',
 			'selector' => $container . ' img[alt=""]',
-			'label'    => __( 'alt attribute is empty', 'caa11yp' ),
-			'severity' => 'low',
-		),
+		)
+	);
+	$tests[]    = new Caa11yp_Test(
+		'a-new-window',
+		__( 'link opens new window', 'caa11yp' ),
+		__( 'Links that open new windows', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'low',
 		array(
-			'id'       => 'a-new-window',
 			'selector' => $container . ' a[target]:not([target="_self"])',
-			'label'    => __( 'link opens new window', 'caa11yp' ),
-			'severity' => 'low',
-		),
+		)
+	);
+	$tests[]     = new Caa11yp_Test(
+		'a-has-title',
+		__( 'has title attribute', 'caa11yp' ),
+		__( 'Links that have a title attribute', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'high',
 		array(
-			'id'       => 'a-has-title',
 			'selector' => $container . ' a[title]',
-			'label'    => __( 'has title attribute', 'caa11yp' ),
-			'severity' => 'high',
-		),
+		)
+	);
+	$tests[]      = new Caa11yp_Test(
+		'img-no-alt',
+		__( 'alt attribute is empty', 'caa11yp' ),
+		__( 'Images that have no alt attribute', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'high',
 		array(
-			'id'       => 'img-no-alt',
 			'selector' => $container . ' img:not([alt])',
-			'label'    => __( 'alt attribute is missing', 'caa11yp' ),
-			'severity' => 'high',
-		),
+		)
+	);
+	$tests[]   = new Caa11yp_Test(
+		'img-has-title',
+		__( 'has title attribute', 'caa11yp' ),
+		__( 'Images that have a title attribute', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'high',
 		array(
-			'id'       => 'img-has-title',
 			'selector' => $container . ' img[title]',
-			'label'    => __( 'has title attribute', 'caa11yp' ),
-			'severity' => 'high',
-		),
+		)
+	);
+	$tests[] = new Caa11yp_Test(
+		'img-svg-no-role',
+		__( 'missing role="img"', 'caa11yp' ),
+		__( 'SVG files that don`t have role="img"', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'high',
 		array(
-			'id'       => 'img-svg-no-role',
 			'selector' => $container . ' img[src$=".svg"]:not([role="img"])',
-			'label'    => __( 'missing role="img"', 'caa11yp' ),
-			'severity' => 'high',
-		),
+		)
+	);
+	$tests[]     = new Caa11yp_Test(
+		'svg-no-role',
+		__( 'missing role="img"', 'caa11yp' ),
+		__( 'Inline SVGs that don`t have role="img"', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'high',
 		array(
-			'id'       => 'svg-no-role',
 			'selector' => $container . ' svg:not([role="img"])',
-			'label'    => __( 'missing role="img"', 'caa11yp' ),
-			'severity' => 'high',
-		),
+		)
+	);
+	$tests[]   = new Caa11yp_Test(
+		'heading-empty',
+		__( 'empty heading', 'caa11yp' ),
+		__( '', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'high',
 		array(
-			'id'       => 'heading-empty',
 			'selector' => $container . ' h1:empty, ' . $container . ' h2:empty, ' . $container . ' h3:empty, ' . $container . ' h4:empty, ' . $container . ' h5:empty, ' . $container . ' h6:empty',
-			'label'    => __( 'empty heading', 'caa11yp' ),
-			'severity' => 'high',
-		),
+		)
+	);
+	$tests[]         = new Caa11yp_Test(
+		'a-empty',
+		__( 'empty link', 'caa11yp' ),
+		__( '', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'high',
 		array(
-			'id'       => 'a-empty',
 			'selector' => $container . ' a:not([name]):empty',
-			'label'    => __( 'empty link', 'caa11yp' ),
-			'severity' => 'high',
-		),
+		)
+	);
+	$tests[]    = new Caa11yp_Test(
+		'button-empty',
+		__( 'empty button', 'caa11yp' ),
+		__( '', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'high',
 		array(
-			'id'       => 'button-empty',
 			'selector' => $container . ' button:empty',
-			'label'    => __( 'empty button', 'caa11yp' ),
-			'severity' => 'high',
-		),
+		)
+	);
+	$tests[]        = new Caa11yp_Test(
+		'th-empty',
+		__( 'empty header cell', 'caa11yp' ),
+		__( '', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'high',
 		array(
-			'id'       => 'th-empty',
 			'selector' => $container . ' th:empty',
-			'label'    => __( 'empty header cell', 'caa11yp' ),
-			'severity' => 'high',
-		),
+		)
+	);
+	$tests[]        = new Caa11yp_Test(
+		'td-empty',
+		__( 'empty data cell', 'caa11yp' ),
+		__( '', 'caa11yp' ),
+		__( 'explanation', 'caa11yp' ),
+		'low',
 		array(
-			'id'       => 'td-empty',
 			'selector' => $container . ' td:empty',
-			'label'    => __( 'empty data cell', 'caa11yp' ),
-			'severity' => 'low',
-		),
+		)
 	);
 	return $tests;
 }

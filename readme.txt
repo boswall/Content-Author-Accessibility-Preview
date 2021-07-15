@@ -3,7 +3,7 @@ Contributors: boswall,grahamarmfield
 Donate link: https://github.com/boswall/Content-Author-Accessibility-Preview
 Tags: accessibility, accessible, wcag, a11y, section508, alt text, labels, aria, preview
 Requires at least: 4.6
-Tested up to: 5.2.1
+Tested up to: 5.8
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -67,8 +67,15 @@ No. By default, issues will only be highlighted to anyone who is logged in. You 
 * ~~Limit to the content area of the page~~
 * Show a legend
 * Animated flashing boarders - to really make it obvious
-* Options to hide certain tests
+* ~~Options to hide certain tests~~
 [Suggest a change or feature!](https://github.com/boswall/Content-Author-Accessibility-Preview/issues)
+
+
+
+= 1.2.0 =
+
+* Added a Test class
+* Options to stop certain tests from running
 
 = 1.1.1 =
 
