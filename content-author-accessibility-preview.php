@@ -170,8 +170,8 @@ function caa11yp_get_tests_available( $options = false ) {
 
 	$container = caa11yp_get_container( $options );
 
-	$tests                    = array();
-	$tests[]   = new Caa11yp_Test(
+	$tests   = array();
+	$tests[] = new Caa11yp_Test(
 		'img-empty-alt',
 		__( 'alt attribute is empty', 'caa11yp' ),
 		__( 'Images with empty alt attributes', 'caa11yp' ),
@@ -181,7 +181,7 @@ function caa11yp_get_tests_available( $options = false ) {
 			'selector' => $container . ' img[alt=""]',
 		)
 	);
-	$tests[]    = new Caa11yp_Test(
+	$tests[] = new Caa11yp_Test(
 		'a-new-window',
 		__( 'link opens new window', 'caa11yp' ),
 		__( 'Links that open new windows', 'caa11yp' ),
@@ -191,7 +191,7 @@ function caa11yp_get_tests_available( $options = false ) {
 			'selector' => $container . ' a[target]:not([target="_self"])',
 		)
 	);
-	$tests[]     = new Caa11yp_Test(
+	$tests[] = new Caa11yp_Test(
 		'a-has-title',
 		__( 'has title attribute', 'caa11yp' ),
 		__( 'Links that have a title attribute', 'caa11yp' ),
@@ -201,7 +201,7 @@ function caa11yp_get_tests_available( $options = false ) {
 			'selector' => $container . ' a[title]',
 		)
 	);
-	$tests[]      = new Caa11yp_Test(
+	$tests[] = new Caa11yp_Test(
 		'img-no-alt',
 		__( 'alt attribute is empty', 'caa11yp' ),
 		__( 'Images that have no alt attribute', 'caa11yp' ),
@@ -211,7 +211,7 @@ function caa11yp_get_tests_available( $options = false ) {
 			'selector' => $container . ' img:not([alt])',
 		)
 	);
-	$tests[]   = new Caa11yp_Test(
+	$tests[] = new Caa11yp_Test(
 		'img-has-title',
 		__( 'has title attribute', 'caa11yp' ),
 		__( 'Images that have a title attribute', 'caa11yp' ),
@@ -231,7 +231,7 @@ function caa11yp_get_tests_available( $options = false ) {
 			'selector' => $container . ' img[src$=".svg"]:not([role="img"])',
 		)
 	);
-	$tests[]     = new Caa11yp_Test(
+	$tests[] = new Caa11yp_Test(
 		'svg-no-role',
 		__( 'missing role="img"', 'caa11yp' ),
 		__( 'Inline SVGs that don`t have role="img"', 'caa11yp' ),
@@ -241,50 +241,50 @@ function caa11yp_get_tests_available( $options = false ) {
 			'selector' => $container . ' svg:not([role="img"])',
 		)
 	);
-	$tests[]   = new Caa11yp_Test(
+	$tests[] = new Caa11yp_Test(
 		'heading-empty',
 		__( 'empty heading', 'caa11yp' ),
-		__( '', 'caa11yp' ),
+		__( 'Heading tag that has no content', 'caa11yp' ),
 		__( 'explanation', 'caa11yp' ),
 		'high',
 		array(
 			'selector' => $container . ' h1:empty, ' . $container . ' h2:empty, ' . $container . ' h3:empty, ' . $container . ' h4:empty, ' . $container . ' h5:empty, ' . $container . ' h6:empty',
 		)
 	);
-	$tests[]         = new Caa11yp_Test(
+	$tests[] = new Caa11yp_Test(
 		'a-empty',
 		__( 'empty link', 'caa11yp' ),
-		__( '', 'caa11yp' ),
+		__( 'Link that has no content', 'caa11yp' ),
 		__( 'explanation', 'caa11yp' ),
 		'high',
 		array(
 			'selector' => $container . ' a:not([name]):empty',
 		)
 	);
-	$tests[]    = new Caa11yp_Test(
+	$tests[] = new Caa11yp_Test(
 		'button-empty',
 		__( 'empty button', 'caa11yp' ),
-		__( '', 'caa11yp' ),
+		__( 'Button that has no content', 'caa11yp' ),
 		__( 'explanation', 'caa11yp' ),
 		'high',
 		array(
 			'selector' => $container . ' button:empty',
 		)
 	);
-	$tests[]        = new Caa11yp_Test(
+	$tests[] = new Caa11yp_Test(
 		'th-empty',
 		__( 'empty header cell', 'caa11yp' ),
-		__( '', 'caa11yp' ),
+		__( 'Table heading that has no content', 'caa11yp' ),
 		__( 'explanation', 'caa11yp' ),
 		'high',
 		array(
 			'selector' => $container . ' th:empty',
 		)
 	);
-	$tests[]        = new Caa11yp_Test(
+	$tests[] = new Caa11yp_Test(
 		'td-empty',
 		__( 'empty data cell', 'caa11yp' ),
-		__( '', 'caa11yp' ),
+		__( 'Table cell that has no content', 'caa11yp' ),
 		__( 'explanation', 'caa11yp' ),
 		'low',
 		array(
